@@ -440,11 +440,8 @@ public class CalcBody extends Application {
 		}
 	}
 	
+	// launch 
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-	// this is a test to see if my code was pushed properly
-	
-	// TEST TEST TEST TEST
 }
