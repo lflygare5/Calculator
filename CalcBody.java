@@ -48,8 +48,11 @@ public class CalcBody extends Application {
     String secondValue = ""; 
     Character operator = null; 
     
-    // mathematic Objects 
+    // mathematics Objects 
     Add addObj = new Add(); 
+    Subtract subtractObj = new Subtract(); 
+    Multiply multiplyObj = new Multiply(); 
+    Divide divideObj = new Divide(); 
     
     
     ArrayList<String> valuesArray = new ArrayList<String>(); 
@@ -163,15 +166,15 @@ public class CalcBody extends Application {
                             }
                             else if(operator.equals("-"))
                             {
-                                firstValue = num1 - num2; 
+                                firstValue = subtractObj.execute(num1, num2); 
                             }
                             else if(operator.equals("*"))
                             {
-                                firstValue = num1 * num2; 
+                                firstValue = multiplyObj.execute(num1, num2); 
                             }
                             else if(operator.equals("/"))
                             {
-                                firstValue = num1 / num2; 
+                                firstValue = divideObj.execute(num1, num2); 
                             }
                             
                             tempArray.add(Integer.toString(firstValue));
