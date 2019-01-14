@@ -47,6 +47,11 @@ public class CalcBody extends Application {
     String firstValue = "";
     String secondValue = ""; 
     Character operator = null; 
+    
+    // mathematic Objects 
+    Add addObj = new Add(); 
+    
+    
     ArrayList<String> valuesArray = new ArrayList<String>(); 
 	@Override
 	public void start(Stage primaryStage) {
@@ -141,7 +146,7 @@ public class CalcBody extends Application {
                     else
                     {
                         valuesArray.add(textField.getText());
-                        
+                        //int operatorValue = 0; 
                         for(int i = 0; i < valuesArray.size(); i++)
                         {
                             ArrayList<String> tempArray = new ArrayList<String>(); 
@@ -153,7 +158,8 @@ public class CalcBody extends Application {
                             
                             if(operator.equals("+"))
                             {
-                                firstValue = num1 + num2; 
+                                //operatorValue = addObj.execute(num1, num2); 
+                                 firstValue = addObj.execute(num1, num2); 
                             }
                             else if(operator.equals("-"))
                             {
@@ -444,4 +450,10 @@ public class CalcBody extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	//Git 
+	// git init
+	// git add . 
+	// git commit -a -m "Test"
+	// git push -u origin --all
 }
