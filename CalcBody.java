@@ -138,7 +138,7 @@ public class CalcBody extends Application {
             b4.setText("/"); 
             b4.setOnAction(divideButton);
             
-            EventHandler<ActionEvent> addEvent = new EventHandler<ActionEvent>()
+            EventHandler<ActionEvent> enterEvent = new EventHandler<ActionEvent>()
             {
                 public void handle(ActionEvent event)
                 {
@@ -148,54 +148,154 @@ public class CalcBody extends Application {
                     }
                     else
                     {
+                        
                         valuesArray.add(textField.getText());
-                        //int operatorValue = 0; 
-                        for(int i = 0; i < valuesArray.size(); i++)
+                        
+                        int val = 0; 
+                        
+                        // uses PEMDAS to find the value of the math operation 
+                        
+                        for(int i = 1; i < valuesArray.size(); i += 2)
                         {
-                            ArrayList<String> tempArray = new ArrayList<String>(); 
-                            int num1 = Integer.parseInt(valuesArray.get(0)); 
-                            String operator = valuesArray.get(1); 
-                            int num2 = Integer.parseInt(valuesArray.get(2));
-                            
-                            int firstValue = 0; 
-                            
-                            if(operator.equals("+"))
+                            // performs all of the multiplications and divisions 
+                            // in order depending on the order of the operations
+                            if(valuesArray.get(i).equals("*"))
                             {
-                                //operatorValue = addObj.execute(num1, num2); 
-                                 firstValue = addObj.execute(num1, num2); 
-                            }
-                            else if(operator.equals("-"))
-                            {
-                                firstValue = subtractObj.execute(num1, num2); 
-                            }
-                            else if(operator.equals("*"))
-                            {
-                                firstValue = multiplyObj.execute(num1, num2); 
-                            }
-                            else if(operator.equals("/"))
-                            {
-                                firstValue = divideObj.execute(num1, num2); 
-                            }
-                            
-                            tempArray.add(Integer.toString(firstValue));
-                            
-                            if(valuesArray.size() > 3)
-                            {
-                                for(int j = 3; j < valuesArray.size(); j++)
+                                // the values are added to a temporary array after the operation is executed 
+                                ArrayList<String> tempArray1 = new ArrayList<String>(); 
+                                
+                                val = Integer.parseInt(valuesArray.get(i - 1)) * Integer.parseInt(valuesArray.get(i + 1)); 
+                                
+                                for(int j = 0; j < valuesArray.size(); j++)
                                 {
-                                    tempArray.add(valuesArray.get(j)); 
+                                    // will add the created value to the array
+                                    if(j == i - 1)
+                                    {
+                                        tempArray1.add(Integer.toString(val)); 
+                                        j += 2; 
+                                    }
+                                    else
+                                    {
+                                        tempArray1.add(valuesArray.get(j));
+                                    }
                                 }
+                                valuesArray = tempArray1; 
+                                // i is set to negative one so that it can re examine the list of operations 
+                                // for any more multiplications 
+                                i = -1; 
                             }
-                            valuesArray = tempArray; 
-                            
-                            if(valuesArray.size() == 1)
+                            else if (valuesArray.get(i).equals("/"))
                             {
-                                break; 
+                                ArrayList<String> tempArray1 = new ArrayList<String>(); 
+                                val = Integer.parseInt(valuesArray.get(i - 1)) / Integer.parseInt(valuesArray.get(i + 1)); 
+                                for(int j = 0; j < valuesArray.size(); j++)
+                                {
+                                    if(j == i - 1)
+                                    {
+                                        tempArray1.add(Integer.toString(val)); 
+                                        j += 2; 
+                                    }
+                                    else
+                                    {
+                                        tempArray1.add(valuesArray.get(j));
+                                    }
+                                }
+                                valuesArray = tempArray1;  
+                                i = -1; 
+                            }
+                            
+                        }
+                        
+                        for(int i = 1; i < valuesArray.size(); i += 2)
+                        {
+                            if(valuesArray.get(i).equals("+"))
+                            {
+                                ArrayList<String> tempArray1 = new ArrayList<String>(); 
+                                val = Integer.parseInt(valuesArray.get(i - 1)) + Integer.parseInt(valuesArray.get(i + 1)); 
+                                for(int j = 0; j < valuesArray.size(); j++)
+                                {
+                                    if(j == i - 1)
+                                    {
+                                        tempArray1.add(Integer.toString(val)); 
+                                        j += 2; 
+                                    }
+                                    else
+                                    {
+                                        tempArray1.add(valuesArray.get(j));
+                                    }
+                                }
+                                valuesArray = tempArray1; 
+                                i = -1; 
+                            }
+                            else if (valuesArray.get(i).equals("-"))
+                            {
+                                ArrayList<String> tempArray1 = new ArrayList<String>(); 
+                                val = Integer.parseInt(valuesArray.get(i - 1)) - Integer.parseInt(valuesArray.get(i + 1)); 
+                                for(int j = 0; j < valuesArray.size(); j++)
+                                {
+                                    if(j == i - 1)
+                                    {
+                                        tempArray1.add(Integer.toString(val)); 
+                                        j += 2; 
+                                    }
+                                    else
+                                    {
+                                        tempArray1.add(valuesArray.get(j));
+                                    }
+                                }
+                                valuesArray = tempArray1; 
+                                i = -1; 
                             }
                         }
+                       
                         outputLabel.setText(valuesArray.get(0)); 
                     }
+                    
                     /*
+                    for(int i = 0; i < valuesArray.size(); i++)
+                    {
+                        
+                        
+                        ArrayList<String> tempArray = new ArrayList<String>(); 
+                        int num1 = Integer.parseInt(valuesArray.get(0)); 
+                        String operator = valuesArray.get(1); 
+                        int num2 = Integer.parseInt(valuesArray.get(2));
+                        
+                        int firstValue = 0; 
+                        
+                        
+                        if(operator.equals("+"))
+                        {
+                            //operatorValue = addObj.execute(num1, num2); 
+                             firstValue = addObj.execute(num1, num2); 
+                        }
+                        else if(operator.equals("-"))
+                        {
+                            firstValue = subtractObj.execute(num1, num2); 
+                        }
+                        else if(operator.equals("*"))
+                        {
+                            firstValue = multiplyObj.execute(num1, num2); 
+                        }
+                        else if(operator.equals("/"))
+                        {
+                            firstValue = divideObj.execute(num1, num2); 
+                        }
+                        
+                        tempArray.add(Integer.toString(firstValue));
+                        
+                        if(valuesArray.size() > 3)
+                        {
+                            for(int j = 3; j < valuesArray.size(); j++)
+                            {
+                                tempArray.add(valuesArray.get(j)); 
+                            }
+                        }
+                        
+                    }
+                    outputLabel.setText(valuesArray.get(0)); 
+                
+                
                     firstValue = firstValue.trim(); 
                     secondValue = textField.getText().trim(); 
                     if(operator.equals('+'))
@@ -221,13 +321,15 @@ public class CalcBody extends Application {
                         int finalInt = Integer.parseInt(firstValue) / 
                                         Integer.parseInt(secondValue); 
                         outputLabel.setText(Integer.toString(finalInt)); 
-                    }*/
-                }
+                    }
+                    */
+                    
+                } 
             };
             
             Button finalB = new Button(); 
             finalB.setText("="); 
-            finalB.setOnAction(addEvent);
+            finalB.setOnAction(enterEvent);
             
             
             EventHandler<ActionEvent> bOne = new EventHandler<ActionEvent>()
@@ -431,6 +533,7 @@ public class CalcBody extends Application {
                                 {
                                     textField.clear(); 
                                     valuesArray.clear(); 
+                                    textField.setFocusTraversable(false);
                                 }
                             }
                             );
